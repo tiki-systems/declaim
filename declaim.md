@@ -111,12 +111,13 @@ output: app_doc
 
 ## Rules
 
-1. All blocks must begin with `---`  
-2. All fields except `depends_on`, `output_file`, `output_format`, `output_context`, and `append_to_context` are required  
-3. Task blocks are evaluated in order  
-4. The `output` becomes a named context available to future steps  
-5. `output_context` and `append_to_context` control how results enter shared memory  
-6. The final output block can aggregate multiple contexts  
+1. All blocks must begin with `---`
+2. Output file cannot contain any directives which is NOT defined in this file
+3. All fields except `depends_on`, `output_file`, `output_format`, `output_context`, and `append_to_context` are required  
+4. Task blocks are evaluated in order  
+5. The `output` becomes a named context available to future steps  
+6. `output_context` and `append_to_context` control how results enter shared memory  
+7. The final output block can aggregate multiple contexts  
 
 ---
 
