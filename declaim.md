@@ -1,3 +1,4 @@
+
 # Declaim Prompt Format (v0.2)
 
 **Declaim** is a declarative interaction language designed to break down large language model (LLM) tasks into structured, context-aware subtasks that can be interpreted, tracked, and executed deterministically. This format is intended to be used both by humans and LLMs to produce valid Declaim YAML.
@@ -56,6 +57,7 @@ output: <output context name>
 - `codegen`: Generate code or configurations from description  
 - `synthesis`: Combine outputs of previous tasks into one artifact  
 - `doc`: Generate documentation based on context  
+- `workflow`: Define reusable sets of tasks (macros)
 
 ---
 
@@ -118,6 +120,32 @@ output: app_doc
 
 ---
 
+## Supported Types
+
+### `workflow`
+A special task type used to define reusable named subroutines (macros) that can be invoked from other tasks. This allows encapsulating a sequence of Declaim blocks under a reusable name.
+
+```yaml
+---
+task: workflow
+desc: Define login flow
+output: login_flow
+steps:
+  - task: codegen
+    desc: Backend login endpoint
+    prompt: Use Gin to authenticate users
+    output: login_api
+
+  - task: codegen
+    desc: Login form UI
+    prompt: Create HTMX login form
+    output: login_ui
+```
+
+These workflows can later be referenced as subtasks (e.g., using `invoke: login_flow`).
+
+---
+
 ## Example Usage with LLMs
 
 When prompting ChatGPT or other models:
@@ -132,6 +160,6 @@ This allows the compiler to parse the output into deterministic, LLM-free YAML.
 
 ## Roadmap
 
+- [x] Support `type: workflow` for reusable subroutines  
 - [ ] Support for templated prompt blocks  
-- [ ] Support `type: workflow` for reusable subroutines  
 - [ ] Validate structure using JSON Schema  
